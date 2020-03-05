@@ -1,14 +1,15 @@
-#Creating class for the poles of Hanoi tower 
+#Creating class for the poles of solver tower 
 class Pole:
     def __init__(self,label,disks):
         self.label = label
         self.disks = disks
     
     def addto(self,newdisk):
-        self.disks = disks.append(newdisk)
+        self.disks.append(newdisk)
+        return self.disks
     
     def subtractfrom(self):
-        del disks[-1]
+        del self.disks[-1]
     
     def topdisk(self):
         topdisk = self.disks[-1]
@@ -26,28 +27,38 @@ import numpy as np
 def towergenerator():
     '''Randomise number of disks initialised, assign each disk a 
     unique size denoted by an integer between 0 -> 100.'''
-    global A,B,C
-    numdisks   = random.randint(0,20)                   
-    disks  = random.sample(range(1,100),numdisks)   
+    global A,B,C,n
+    n   = random.randint(2,20)                   
+    disks  = random.sample(range(1,100),n)   
     disks.sort(reverse = True)
     A = Pole('A',disks)
     B = Pole('B',[])
     C = Pole('C',[])    
 
-def move(n,f,t):
-    #Function move disk from f -> t  
-    
+def move(f,t):
+    '''Function move disk from f -> t'''
+    d = f.topdisk()
+    t.addto(d)
+    f = f.subtractfrom()
 
 def solver(n,f,h,t):
     #n:no. of disks, f:from, h:helper, t:target
     if n == 0:
         pass
     else:
-        hanoi(n-1,f,t,h)
-        move(n,f,t)
-        hanoi(n-1,h,f,t)    
+        solver(n-1,f,t,h)
+        move(f,t)
+        solver(n-1,h,f,t)    
 
 towergenerator()
+print("Hanoi tower initialised")
 print(A.disks)
-
+print(B.disks)
+print(C.disks)
+print('\n')
+solver(n,A,B,C)
+print("Hanoi tower solved.")
+print(A.disks)
+print(B.disks)
+print(C.disks)
 
