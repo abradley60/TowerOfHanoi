@@ -1,5 +1,17 @@
-#Creating class for the poles of solver tower 
+class Disk:
+    """
+    Disk class.
+
+    The point of this class is to house properties of a disk.
+    """
+    def __init__(self, size):
+        self.size = size
+    
+    def __lt__(self, other):
+        return self.size < other.size
+
 class Pole:
+
     def __init__(self,label,disks):
         self.label = label
         self.disks = disks
